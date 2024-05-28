@@ -1,0 +1,52 @@
+[
+    {
+      "permissionId": "user_mgnt",
+      "name": "User management",
+      "description": "To read/create/manage the system users, and their permissions.",
+      "productName": "User Management",
+      "selfModifiable": false
+    },
+    {
+      "permissionId": "user_permission_group_mgnt",
+      "name": "User permission group management",
+      "description": "To read/create/manage the predefined user permissions groups",
+      "productName": "User Management",
+      "selfModifiable": false
+    },
+    {
+      "permissionId": "dc_reservation_mgnt",
+      "name": "Reservation management",
+      "description": "To read/manage direct channel's bookings",
+      "productName": "Direct Channel",
+      "selfModifiable": true
+    },
+    {
+      "permissionId": "dc_minisite_cms",
+      "name": "Minisite CMS",
+      "description": "To read/create/manage direct channel properties additional info as mini-site",
+      "productName": "Direct Channel",
+      "selfModifiable": true
+    },
+    {
+      "permissionId": "dc_property_data_mgnt",
+      "name": "Property data management",
+      "description": "To read/create/manage properties and it's configurations for direct channel",
+      "productName": "Direct Channel",
+      "selfModifiable": true
+    },
+    {
+      "permissionId": "dc_photo_mgnt",
+      "name": "Photo management",
+      "description": "To view/add/remove/manage photos for direct channel properties",
+      "productName": "Direct Channel",
+      "selfModifiable": true
+    },
+    {
+      "permissionId": "dc_tag_mgnt",
+      "name": "Tag management",
+      "description": "To read/create/manage tags as a direct channel properties meta data",
+      "productName": "Direct Channel",
+      "selfModifiable": true
+    }
+  ]
+  
