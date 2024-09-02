@@ -3,20 +3,25 @@ require 'net/http'
 require 'uri'
 
 # Variables to be edited as needed
-local_domain_name = 'localhost:8080' # Replace with your actual domain
-dev_domain_name = 'user-auth.dev.tabist.co.jp' # Replace with your actual domain
-stg_domain_name = 'your_domain.com' # Replace with your actual domain
-prod_domain_name = 'your_domain.com' # Replace with your actual domain
-domain_name = dev_domain_name
+local_host_name = 'http://localhost:8080' # Replace with your actual domain
+dev_host_name = 'https://user-auth.dev.tabist.co.jp' # Replace with your actual domain
+stg_host_name = 'https://your_domain.com' # Replace with your actual domain
+prod_host_name = 'https://your_domain.com' # Replace with your actual domain
+host_name = local_host_name
 
-bearer_token = 'eyJraWQiOiJpbjVBUk5vUDBadjhnXC9TSk1PUHBPdzNPVnhpdm03czR0UXZ5c0lUVGRIVT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxOWQ3MzhjYS05MWQzLTRiODYtOWE0Yy03Yjg4NTI5MGIwM2EiLCJjb2duaXRvOmdyb3VwcyI6WyJBRE1JTiJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtbm9ydGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtbm9ydGhlYXN0LTFfZ2Z1WUJjZkNQIiwiY2xpZW50X2lkIjoiNTAwaDI4dWtubjQ2OXFnb25nZ2ZhZzBsOGsiLCJvcmlnaW5fanRpIjoiOTg1NjE5YTAtZGVlOS00YTc2LWI0NTUtZDBmOTk5ZDdkMmJjIiwiZXZlbnRfaWQiOiIxMGMxZTM3Zi1lMDJiLTQzY2EtOGZmOS04NDk4NDRkMDE2YzMiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzE5Mjk4NjgxLCJleHAiOjE3MjEzNzU1NDMsImlhdCI6MTcyMTM3MTk0MywianRpIjoiNTE5NjE0MDEtN2U4Yy00ZDJlLWFjOTAtMTkwMjM5Njg2NWQxIiwidXNlcm5hbWUiOiIxOWQ3MzhjYS05MWQzLTRiODYtOWE0Yy03Yjg4NTI5MGIwM2EifQ.AdB-tA0dQeXjtxbnM22gx7R1pLfi0erY3Da61DyiovnNTqI9BsrsOwTC02-oV0_5OWpgUwE8yofoY7WpfliVyztQW8k-5O6Wj9kLhhwraeNT-s6A7h8c2ts7zaPdzi5SklRQOYte1M-apXHHm-LLrogmXOdgOmEEgFLydy6Cm9Mt_Pjc4wmNGHn8UfPoMsBPOkq2bX9VYT5RdAoE-CaC6lXMNF9L3EI9MVgzkLKafbt3NM8euKj5uM_S_FWqZi4n5Kg5kXM_BNulcuIqxSAEh4zMhiFjtBQG6BZ1bT6RAkR8J1DrfGWwvnQyQ-fIIuBlKfYXhy_kI7itCvkOVjk3fQ' # Replace with your actual bearer token
+# Replace with your actual bearer token
+bearer_token = 'eyJraWQiOiJkMlNVa0xTVnhUSENpOU1hdHF4UFRpWDdvNlBRQnhRMUpFQm1KZHc4ODlFPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIxOWQ3MzhjYS05MWQzLTRiODYtOWE0Yy03Yjg4NTI5MGIwM2EiLCJjb2duaXRvOmdyb3VwcyI6WyJBRE1JTiJdLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiY29nbml0bzpwcmVmZXJyZWRfcm9sZSI6ImFybjphd3M6aWFtOjo2NzY4MTU3Mjg2MTk6cm9sZVwvVXNlcl9NYW5hZ2VtZW50X1JvbGUiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtbm9ydGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtbm9ydGhlYXN0LTFfZ2Z1WUJjZkNQIiwiY29nbml0bzp1c2VybmFtZSI6IjE5ZDczOGNhLTkxZDMtNGI4Ni05YTRjLTdiODg1MjkwYjAzYSIsImN1c3RvbTpqb2JfdGl0bGUiOiJBZG1pbiIsIm9yaWdpbl9qdGkiOiIzYjZkNDAwMi1kNTExLTQwOWEtOWZlNC1kNzNiZTVjMzVjNzEiLCJjb2duaXRvOnJvbGVzIjpbImFybjphd3M6aWFtOjo2NzY4MTU3Mjg2MTk6cm9sZVwvVXNlcl9NYW5hZ2VtZW50X1JvbGUiXSwiYXVkIjoiNTAwaDI4dWtubjQ2OXFnb25nZ2ZhZzBsOGsiLCJldmVudF9pZCI6ImY4ZGE2YjdkLWJkYTUtNGQxYi1hZjQzLWM5ZTUyMTBiM2YxYSIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzI0MjE5ODQxLCJleHAiOjE3MjUyNDk0ODMsImN1c3RvbTpoYXNfYWxsX2hvdGVsX2FjY2VzcyI6InRydWUiLCJpYXQiOjE3MjUyNDU4ODMsImp0aSI6ImJkYWMxMGZmLTVmODQtNDk5Yy1iY2YwLWM0NDFjZTRkNDQwOSIsImVtYWlsIjoiY2hldGFuLmdob2Rhc2FyYUB0YWJpc3QuY29tIn0.OE5YKRKpIOqXC9gdjRXnUHdcQYVDkY7eaiIyZr_fgweTrm2t-IxZHJt3LlB3QRAOOvHB-MJXEMy8d5pXa9IAsgaDgOc5si6yNHe5MNqn0Sy0Rr3wfdZX5jurDCLiEMtbyWmNq4lbavaZkGv36HYR6sDtp9I3SfbmqeX7aUsznb6w1h7uEIkxgb6jP3XOh5nkxPo1aPZhRLO2DzSSEQe7unU-LAUJ3PI35McLK1BCo1nUIxR9ybB0BjZMi-ni8tyX7-tB8vRD7mgQbi-FTUkUOriagzsY9NeXhL4mhhj9kELDZhifku40ffBBkviRerSMjZGkulvuB0LadJ2mM5cu4Q' 
+
+# Change the file name as needed
+# file_name = 'input_DC_1.json' 
+file_name = 'input_RM.json' 
 
 # Read the JSON objects from input.json file
-file = File.read('input.json')
+file = File.read(file_name)
 permissions = JSON.parse(file)
 
 permissions.each do |permission|
-  uri = URI("https://#{domain_name}/api/v0.1/permissions")
+  uri = URI("#{host_name}/api/v0.1/permissions")
   http = Net::HTTP.new(uri.host, uri.port)
   http.use_ssl = true if uri.scheme == 'https'
 
@@ -25,7 +30,7 @@ permissions.each do |permission|
   request['Authorization'] = "Bearer #{bearer_token}"
   request.body = permission.to_json
 
-  puts "Request #{request.method} #{request.path}: #{request.body.to_json}"
+  puts "Request #{request.method} #{request.path}: #{request.body}"
   response = http.request(request)
   puts "Response #{response.code} #{response.message}: #{response.body}"
 end

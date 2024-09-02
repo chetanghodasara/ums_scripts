@@ -1,0 +1,9 @@
+[
+  {
+    "permissionId": "dc_reservation_mgnt",
+    "name": "Reservation management",
+    "description": "To read/manage direct channel's bookings",
+    "productName": "Direct Channel",
+    "selfModifiable": true
+  }
+]

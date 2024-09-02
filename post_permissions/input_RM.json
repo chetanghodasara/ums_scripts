@@ -1,0 +1,44 @@
+[
+  {
+    "permissionId": "rm_account_mgnt",
+    "name": "Account Settings",
+    "description": "To read/create/manage the account settings and add hotels within the account.",
+    "productName": "Review Management",
+    "selfModifiable": true
+  },
+  {
+    "permissionId": "rm_hotel_mgnt",
+    "name": "Hotel Settings",
+    "description": "To read/create/manage the hotels settings.",
+    "productName": "Review Management",
+    "selfModifiable": true
+  },
+  {
+    "permissionId": "rm_ota_mgnt",
+    "name": "OTA Settings",
+    "description": "To read/create/manage the OTA accounts for a hotel.",
+    "productName": "Review Management",
+    "selfModifiable": true
+  },
+  {
+    "permissionId": "rm_reply_mgnt",
+    "name": "Reply Management",
+    "description": "To read/create/manage the replies.",
+    "productName": "Review Management",
+    "selfModifiable": true
+  },
+  {
+    "permissionId": "rm_dashboard",
+    "name": "Dashboard",
+    "description": "To read/create/manage the dashboard and the recommended action list.",
+    "productName": "Review Management",
+    "selfModifiable": true
+  },
+  {
+    "permissionId": "rm_alert_mgnt",
+    "name": "Alerts",
+    "description": "To read/create/manage alert notifications and group recipients.",
+    "productName": "Review Management",
+    "selfModifiable": true
+  }
+]
