@@ -1,0 +1,9 @@
+[
+  {
+    "permissionId": "user_mgnt",
+    "name": "User management",
+    "description": "To read/create/manage the system users, and their permissions.",
+    "productName": "User Management",
+    "selfModifiable": false
+  }
+]
