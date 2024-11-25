@@ -14,13 +14,6 @@
     "selfModifiable": true
   },
   {
-    "permissionId": "rm_ota_mgnt",
-    "name": "OTA Settings",
-    "description": "To read/create/manage the OTA accounts for a hotel.",
-    "productName": "Review Management",
-    "selfModifiable": true
-  },
-  {
     "permissionId": "rm_reply_mgnt",
     "name": "Reply Management",
     "description": "To read/create/manage the replies.",
